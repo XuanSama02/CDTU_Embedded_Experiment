@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "bsp_i2c.h": "c",
+        "bsp_oled.h": "c"
+    }
+}

@@ -1,0 +1,28 @@
+--cpu Cortex-M3
+"embeddedweek\bsp_i2c.o"
+"embeddedweek\bsp_delay.o"
+"embeddedweek\bsp_oled.o"
+"embeddedweek\startup_stm32f103xe.o"
+"embeddedweek\main.o"
+"embeddedweek\gpio.o"
+"embeddedweek\stm32f1xx_it.o"
+"embeddedweek\stm32f1xx_hal_msp.o"
+"embeddedweek\stm32f1xx_hal_timebase_tim.o"
+"embeddedweek\stm32f1xx_hal_gpio_ex.o"
+"embeddedweek\stm32f1xx_hal_tim.o"
+"embeddedweek\stm32f1xx_hal_tim_ex.o"
+"embeddedweek\stm32f1xx_hal.o"
+"embeddedweek\stm32f1xx_hal_rcc.o"
+"embeddedweek\stm32f1xx_hal_rcc_ex.o"
+"embeddedweek\stm32f1xx_hal_gpio.o"
+"embeddedweek\stm32f1xx_hal_dma.o"
+"embeddedweek\stm32f1xx_hal_cortex.o"
+"embeddedweek\stm32f1xx_hal_pwr.o"
+"embeddedweek\stm32f1xx_hal_flash.o"
+"embeddedweek\stm32f1xx_hal_flash_ex.o"
+"embeddedweek\stm32f1xx_hal_exti.o"
+"embeddedweek\system_stm32f1xx.o"
+--strict --scatter "EmbeddedWeek\EmbeddedWeek.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "EmbeddedWeek.map" -o EmbeddedWeek\EmbeddedWeek.axf
