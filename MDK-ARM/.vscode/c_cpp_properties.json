@@ -9,11 +9,16 @@
                 "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Drivers\\CMSIS\\Device\\ST\\STM32F1xx\\Include",
                 "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Drivers\\CMSIS\\Include",
                 "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\YMX_Bsp",
+                "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Middlewares\\Third_Party\\FreeRTOS\\Source\\include",
+                "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Middlewares\\Third_Party\\FreeRTOS\\Source\\CMSIS_RTOS",
+                "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\RVDS\\ARM_CM3",
                 "C:\\Keil\\ARM\\ARMCC\\include",
                 "C:\\Keil\\ARM\\ARMCC\\include\\rw",
                 "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\MDK-ARM",
                 "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Core\\Src",
-                "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Drivers\\STM32F1xx_HAL_Driver\\Src"
+                "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Drivers\\STM32F1xx_HAL_Driver\\Src",
+                "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Middlewares\\Third_Party\\FreeRTOS\\Source",
+                "d:\\000000000000\\0Code-MengXuan\\00000000GitHub\\CDTU_Embedded_Experiment\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\MemMang"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
