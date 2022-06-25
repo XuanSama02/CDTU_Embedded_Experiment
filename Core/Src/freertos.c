@@ -50,8 +50,8 @@
 osThreadId defaultTaskHandle;
 osThreadId BlinkHandle;
 osThreadId COMHandle;
-osThreadId LCDHandle;
-osThreadId ControlHandle;
+osThreadId TM1638Handle;
+osThreadId DebugHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -61,8 +61,8 @@ osThreadId ControlHandle;
 void StartDefaultTask(void const * argument);
 void Start_Blink(void const * argument);
 void Start_COM(void const * argument);
-void Start_LCD(void const * argument);
-void Start_Control(void const * argument);
+void Start_TM1638(void const * argument);
+void Start_Debug(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -121,13 +121,13 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(COM, Start_COM, osPriorityNormal, 0, 128);
   COMHandle = osThreadCreate(osThread(COM), NULL);
 
-  /* definition and creation of LCD */
-  osThreadDef(LCD, Start_LCD, osPriorityNormal, 0, 128);
-  LCDHandle = osThreadCreate(osThread(LCD), NULL);
+  /* definition and creation of TM1638 */
+  osThreadDef(TM1638, Start_TM1638, osPriorityNormal, 0, 128);
+  TM1638Handle = osThreadCreate(osThread(TM1638), NULL);
 
-  /* definition and creation of Control */
-  osThreadDef(Control, Start_Control, osPriorityHigh, 0, 128);
-  ControlHandle = osThreadCreate(osThread(Control), NULL);
+  /* definition and creation of Debug */
+  osThreadDef(Debug, Start_Debug, osPriorityHigh, 0, 128);
+  DebugHandle = osThreadCreate(osThread(Debug), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -166,7 +166,7 @@ void StartDefaultTask(void const * argument)
 void Start_Blink(void const * argument)
 {
   /* USER CODE BEGIN Start_Blink */
-  osDelay(2000);
+  osDelay(1000);
   /* Infinite loop */
   for(;;)
   {
@@ -188,12 +188,12 @@ void Start_Blink(void const * argument)
 void Start_COM(void const * argument)
 {
   /* USER CODE BEGIN Start_COM */
-  osDelay(2000);
+  osDelay(1000);
   uint32_t nCount = 0;
   /* Infinite loop */
   for(;;)
   {
-    //用于检测TIM毫秒级延时函数
+    //用于测试微秒级延时函数
     printf("Hanris: %d\r\n", nCount++);
     osDelay(1000);
     printf("Hanris: %d\r\n", nCount++);
@@ -203,42 +203,42 @@ void Start_COM(void const * argument)
   /* USER CODE END Start_COM */
 }
 
-/* USER CODE BEGIN Header_Start_LCD */
+/* USER CODE BEGIN Header_Start_TM1638 */
 /**
-* @brief Function implementing the LCD thread.
+* @brief Function implementing the TM1638 thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_Start_LCD */
-void Start_LCD(void const * argument)
+/* USER CODE END Header_Start_TM1638 */
+void Start_TM1638(void const * argument)
 {
-  /* USER CODE BEGIN Start_LCD */
-  osDelay(2000);
+  /* USER CODE BEGIN Start_TM1638 */
+  osDelay(1000);
   /* Infinite loop */
   for(;;)
   {
     osDelay(1);
   }
-  /* USER CODE END Start_LCD */
+  /* USER CODE END Start_TM1638 */
 }
 
-/* USER CODE BEGIN Header_Start_Control */
+/* USER CODE BEGIN Header_Start_Debug */
 /**
-* @brief Function implementing the Control thread.
+* @brief Function implementing the Debug thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_Start_Control */
-void Start_Control(void const * argument)
+/* USER CODE END Header_Start_Debug */
+void Start_Debug(void const * argument)
 {
-  /* USER CODE BEGIN Start_Control */
-  osDelay(2000);
+  /* USER CODE BEGIN Start_Debug */
+  osDelay(1000);
   /* Infinite loop */
   for(;;)
   {
     osDelay(1);
   }
-  /* USER CODE END Start_Control */
+  /* USER CODE END Start_Debug */
 }
 
 /* Private application code --------------------------------------------------*/

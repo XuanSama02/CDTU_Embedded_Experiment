@@ -36,3 +36,18 @@ void F103_BEEP(bool BEEP_Status)
     else
         HAL_GPIO_WritePin(BEEP_GPIO_Port, BEEP_Pin, GPIO_PIN_RESET);
 }
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    switch(GPIO_Pin)
+    {
+        case KEY_UP_Pin:HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);break;
+        case KEY_01_Pin:HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);break;
+        case KEY_02_Pin:HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);break;
+        case Flowmeter_Pin:
+        {
+            if(YMX_Flowmeter.Enable == true)
+                YMX_Flowmeter.Counter++;
+        }break;
+    }
+}

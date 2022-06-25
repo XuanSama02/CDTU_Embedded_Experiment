@@ -3,6 +3,7 @@
         "bsp_i2c.h": "c",
         "bsp_oled.h": "c",
         "main.h": "c",
-        "bsp_f103.h": "c"
+        "bsp_f103.h": "c",
+        "bsp_flowmeter.h": "c"
     }
 }

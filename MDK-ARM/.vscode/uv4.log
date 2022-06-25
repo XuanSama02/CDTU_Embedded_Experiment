@@ -2,7 +2,7 @@
 Build target 'EmbeddedWeek'
 compiling freertos.c...
 linking...
-Program Size: Code=8864 RO-data=536 RW-data=136 ZI-data=6256  
+Program Size: Code=8556 RO-data=540 RW-data=144 ZI-data=6168  
 FromELF: creating hex file...
 "EmbeddedWeek\EmbeddedWeek.axf" - 0 Error(s), 0 Warning(s).
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:05

@@ -34,7 +34,8 @@ extern "C" {
 #include "bsp_f103.h"
 #include "bsp_usart.h"
 #include "bsp_f103_delay.h"
-#include "bsp_spi_lcd.h"
+#include "bsp_tm1638.h"
+#include "bsp_flowmeter.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -68,21 +69,18 @@ void Error_Handler(void);
 #define KEY_01_EXTI_IRQn EXTI4_IRQn
 #define LED_GREEN_Pin GPIO_PIN_5
 #define LED_GREEN_GPIO_Port GPIOE
-#define LCD_BLK_Pin GPIO_PIN_1
-#define LCD_BLK_GPIO_Port GPIOC
-#define LCD_DC_Pin GPIO_PIN_2
-#define LCD_DC_GPIO_Port GPIOC
-#define LCD_CS_Pin GPIO_PIN_3
-#define LCD_CS_GPIO_Port GPIOC
 #define KEY_UP_Pin GPIO_PIN_0
 #define KEY_UP_GPIO_Port GPIOA
 #define KEY_UP_EXTI_IRQn EXTI0_IRQn
-#define LCD_SCK_Pin GPIO_PIN_5
-#define LCD_SCK_GPIO_Port GPIOA
-#define LCD_MISO_Pin GPIO_PIN_6
-#define LCD_MISO_GPIO_Port GPIOA
-#define LCD_MOSI_Pin GPIO_PIN_7
-#define LCD_MOSI_GPIO_Port GPIOA
+#define Flowmeter_Pin GPIO_PIN_11
+#define Flowmeter_GPIO_Port GPIOE
+#define Flowmeter_EXTI_IRQn EXTI15_10_IRQn
+#define TM1638_STB_Pin GPIO_PIN_12
+#define TM1638_STB_GPIO_Port GPIOE
+#define TM1638_CLK_Pin GPIO_PIN_13
+#define TM1638_CLK_GPIO_Port GPIOE
+#define TM1638_DIO_Pin GPIO_PIN_14
+#define TM1638_DIO_GPIO_Port GPIOE
 #define LED_RED_Pin GPIO_PIN_5
 #define LED_RED_GPIO_Port GPIOB
 #define BEEP_Pin GPIO_PIN_8

@@ -3,6 +3,7 @@
 
 #include "main.h"
 #include "stdbool.h"
+#include "cmsis_os.h"
 
 /*
 STM32_HAL F103 Elite XuanLib
@@ -19,5 +20,7 @@ changelog：
 
 void F103_LED(bool LED_COLOR, bool LED_Status);  //控制LED亮灭
 void F103_BEEP(bool BEEP_Status);  //控制蜂鸣器
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);  //中断回调函数
 
 #endif
