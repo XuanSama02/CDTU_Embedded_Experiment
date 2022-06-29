@@ -47,7 +47,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         case Flowmeter_Pin:
         {
             if(YMX_Flowmeter.Enable == true)
+            {
                 YMX_Flowmeter.Counter++;
+                if(YMX_Flowmeter.Counter >= YMX_Flowmeter.Counter_Target)
+                    Flow_Finished();
+            }
         }break;
     }
 }

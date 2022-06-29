@@ -213,7 +213,8 @@ void Start_COM(void const * argument)
 void Start_TM1638(void const * argument)
 {
   /* USER CODE BEGIN Start_TM1638 */
-  osDelay(1000);
+  osDelay(500);
+  TM1638_Init();
   /* Infinite loop */
   for(;;)
   {
@@ -236,6 +237,8 @@ void Start_Debug(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+    YMX_Flowmeter = {0};  //初始化
+    Flow_UI_Setting(0);   //
     osDelay(1);
   }
   /* USER CODE END Start_Debug */

@@ -4,6 +4,7 @@
         "bsp_oled.h": "c",
         "main.h": "c",
         "bsp_f103.h": "c",
-        "bsp_flowmeter.h": "c"
+        "bsp_flowmeter.h": "c",
+        "bsp_tm1638.h": "c"
     }
 }
