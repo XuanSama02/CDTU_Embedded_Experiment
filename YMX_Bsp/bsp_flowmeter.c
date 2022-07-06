@@ -1,66 +1,118 @@
 #include "bsp_flowmeter.h"
 
+TM1638_HandleTypeDef YMX_TM1638 = {0};
 Flowmeter_HandleTypeDef YMX_Flowmeter = {0};
 
 /**
- * @brief UI界面函数
+ * @brief UI界面显示函数(调用一次刷新一次显示)
  * 
  */
-void FLow_UI(void)
+void Flow_UI_Display(void)
 {
-    switch(YMX_Flowmeter.Status)
+    if(YMX_Flowmeter.Status == 0)  //设定中
     {
-        case 0:FLow_UI_Setting();break;
-        case 1:Flow_UI_Running();break;
-        case 2:Flow_UI_Finished();break;
+        TM1638_SEG(YMX_TM1638.SEG, Point_None);  //显示当前设定量
+        TM1638_LED(YMX_TM1638.LED);
+    }
+    else if(YMX_Flowmeter.Status == 1)  //工作中
+    {
+        long temp = 0;
+        temp += YMX_Flowmeter.Water_Target * 10000;      //添加高4位显示值
+        temp += (YMX_Flowmeter.Counter * Water_Step)/10;      //添加低4位显示值
+        TM1638_SEG(temp, Point_None);                    //高4位显示目标出水量，低4位显示当前出水量(mL)
+        TM1638_LED(YMX_TM1638.LED);
     }
 }
 
 /**
- * @brief 设置出水量
+ * @brief UI界面响应函数(逻辑：根据传入中断引脚与状态位标志综合判断)
  * 
+ * @param GPIO_Pin GPIO中断引脚号(KEY_UP_Pin/KEY_01_Pin/KEY_02_Pin)
  */
-void Flow_UI_Setting(void)
+void Flow_UI_Command(uint16_t GPIO_Pin)
 {
-    TM1638_SEG((long)YMX_Flowmeter.Water_Target, Point_None);  //显示目标出水量
-    TM1638_LED(0x00);
+    switch(GPIO_Pin)
+    {
+        case KEY_UP_Pin:
+        {
+            switch(YMX_Flowmeter.Status)
+            {
+                case 0:
+                {
+                    Flow_Water((uint16_t)YMX_TM1638.SEG);  //开始出水
+                }break;
+                case 1:
+                {
+                    ;
+                }break;
+                case 2:
+                {
+                    ;
+                }break;
+            }
+        }break;
+        case KEY_01_Pin:
+        {
+            switch(YMX_Flowmeter.Status)
+            {
+                case 0:
+                {
+                    if(YMX_TM1638.SEG >= 0)
+                        YMX_TM1638.SEG -= 100;
+                }break;
+                case 1:
+                {
+                    ;
+                }break;
+                case 2:
+                {
+                    ;
+                }break;
+            }
+        }break;
+        case KEY_02_Pin:
+        {
+            switch(YMX_Flowmeter.Status)
+            {
+                case 0:
+                {
+                    if(YMX_TM1638.SEG <= 5000)
+                        YMX_TM1638.SEG += 100;
+                }break;
+                case 1:
+                {
+                    ;
+                }break;
+                case 2:
+                {
+                    YMX_Flowmeter.Status = 0;
+                    YMX_Flowmeter.Enable = false;
+                    YMX_Flowmeter.Counter = 0;
+                    YMX_Flowmeter.Counter_Target = 0;
+                }break;
+            }
+        }break;
+    }
 }
 
 /**
- * @brief 水泵运行中
- * 
- */
-void Flow_UI_Running(void)
-{
-    TM1638_SEG((long)YMX_Flowmeter.Counter*156, Point_None);  //显示当前出水量
-    TM1638_LED(0xCC);
-}
-
-/**
- * @brief 完成任务
- * 
- */
-void Flow_UI_Finished(void)
-{
-    TM1638_SEG((long)YMX_Flowmeter.Water_Target, Point_None);  //显示完成量
-    TM1638_LED(0xFF);
-}
-
-/**
- * @brief 输出指定毫升的水
+ * @brief 输出指定毫升的水(0-9900)
  * 
  * @param mL 水量(毫升)
  */
 void Flow_Water(uint16_t mL)
 {
     //对水流量计清零
-    YMX_Flowmeter.Counter = 0;     //清零计数器
-    YMX_Flowmeter.Enable = false;
+    YMX_Flowmeter.Enable = false;           //使能标志位：不使能
+    YMX_Flowmeter.Counter = 0;              //清零计数器
     //控制水流量计
-    uint16_t nCount = mL/156;      //计算需要的脉冲数
-    Flow_Valve(ON);                //打开电磁阀
-    FLow_Pump(ON);                 //打开水泵
-    YMX_Flowmeter.Enable = true;   //使能水流量计
+    YMX_Flowmeter.Water_Target = mL;        //写入目标出水量
+    uint16_t nCount = (mL*10)/Water_Step;   //计算需要的脉冲数
+    YMX_Flowmeter.Counter_Target = nCount;  //写入目标脉冲数
+    Flow_Valve(ON);                         //打开电磁阀
+    Flow_Pump(ON);                          //打开水泵
+    YMX_Flowmeter.Enable = true;            //使能标志位：使能
+    YMX_Flowmeter.Status = 1;               //状态标志位：工作中
 }
 
 /**
@@ -68,12 +120,12 @@ void Flow_Water(uint16_t mL)
  * 
  * @param Status 水泵状态(ON/OFF)
  */
-void FLow_Pump(bool Status)
+void Flow_Pump(bool Status)
 {
     if(Status == ON)
-        FLow_Relay(Relay_CH1, ON);
+        HAL_GPIO_WritePin(Flow_Pump_PORT, Flow_Pump_PIN, GPIO_PIN_SET);
     else
-        FLow_Relay(Relay_CH1, OFF);
+        HAL_GPIO_WritePin(Flow_Pump_PORT, Flow_Pump_PIN, GPIO_PIN_RESET);
 }
 
 /**
@@ -84,31 +136,7 @@ void FLow_Pump(bool Status)
 void Flow_Valve(bool Status)
 {
     if(Status == ON)    
-        FLow_Relay(Relay_CH2, ON);
+        HAL_GPIO_WritePin(Flow_Valve_PORT, Flow_Valve_PIN, GPIO_PIN_SET);
     else
-        FLow_Relay(Relay_CH2, OFF);
-}
-
-/**
- * @brief 控制继电器状态
- * 
- * @param Relay_CHx 继电器通道(Relay_CH1/Relay_CH2)
- * @param Status 继电器通道状态(ON/OFF)
- */
-void FLow_Relay(bool Relay_CHx, bool Status)
-{
-    if(Relay_CHx == Relay_CH1)
-    {
-        if(Status == ON);
-            HAL_GPIO_WritePin(Flow_Relay_CH1_PORT, Flow_Relay_CH1_PIN, GPIO_PIN_SET);
-        else
-            HAL_GPIO_WritePin(Flow_Relay_CH1_PORT, Flow_Relay_CH1_PIN, GPIO_PIN_SET);
-    }
-    else if(Relay_CHx == Relay_CH2)
-    {
-        if(Status == ON);
-            HAL_GPIO_WritePin(Flow_Relay_CH2_PORT, Flow_Relay_CH1_PIN, GPIO_PIN_SET);
-        else
-            HAL_GPIO_WritePin(Flow_Relay_CH2_PORT, Flow_Relay_CH1_PIN, GPIO_PIN_SET);
-    }
+        HAL_GPIO_WritePin(Flow_Valve_PORT, Flow_Valve_PIN, GPIO_PIN_RESET);
 }

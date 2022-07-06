@@ -72,6 +72,10 @@ void Error_Handler(void);
 #define KEY_UP_Pin GPIO_PIN_0
 #define KEY_UP_GPIO_Port GPIOA
 #define KEY_UP_EXTI_IRQn EXTI0_IRQn
+#define Flow_Pump_Pin GPIO_PIN_9
+#define Flow_Pump_GPIO_Port GPIOE
+#define Flow_Valve_Pin GPIO_PIN_10
+#define Flow_Valve_GPIO_Port GPIOE
 #define Flowmeter_Pin GPIO_PIN_11
 #define Flowmeter_GPIO_Port GPIOE
 #define Flowmeter_EXTI_IRQn EXTI15_10_IRQn

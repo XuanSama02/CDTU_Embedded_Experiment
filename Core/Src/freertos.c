@@ -49,7 +49,6 @@
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId BlinkHandle;
-osThreadId COMHandle;
 osThreadId TM1638Handle;
 osThreadId DebugHandle;
 
@@ -60,7 +59,6 @@ osThreadId DebugHandle;
 
 void StartDefaultTask(void const * argument);
 void Start_Blink(void const * argument);
-void Start_COM(void const * argument);
 void Start_TM1638(void const * argument);
 void Start_Debug(void const * argument);
 
@@ -116,10 +114,6 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of Blink */
   osThreadDef(Blink, Start_Blink, osPriorityNormal, 0, 128);
   BlinkHandle = osThreadCreate(osThread(Blink), NULL);
-
-  /* definition and creation of COM */
-  osThreadDef(COM, Start_COM, osPriorityNormal, 0, 128);
-  COMHandle = osThreadCreate(osThread(COM), NULL);
 
   /* definition and creation of TM1638 */
   osThreadDef(TM1638, Start_TM1638, osPriorityNormal, 0, 128);
@@ -178,31 +172,6 @@ void Start_Blink(void const * argument)
   /* USER CODE END Start_Blink */
 }
 
-/* USER CODE BEGIN Header_Start_COM */
-/**
-* @brief Function implementing the COM thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_Start_COM */
-void Start_COM(void const * argument)
-{
-  /* USER CODE BEGIN Start_COM */
-  osDelay(1000);
-  uint32_t nCount = 0;
-  /* Infinite loop */
-  for(;;)
-  {
-    //用于测试微秒级延时函数
-    printf("Hanris: %d\r\n", nCount++);
-    osDelay(1000);
-    printf("Hanris: %d\r\n", nCount++);
-    for(int n=0; n!=1000; n++)
-      Delay_us(1000);
-  }
-  /* USER CODE END Start_COM */
-}
-
 /* USER CODE BEGIN Header_Start_TM1638 */
 /**
 * @brief Function implementing the TM1638 thread.
@@ -218,7 +187,8 @@ void Start_TM1638(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    Flow_UI_Display();
+    osDelay(100);
   }
   /* USER CODE END Start_TM1638 */
 }
@@ -237,8 +207,6 @@ void Start_Debug(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    YMX_Flowmeter = {0};  //初始化
-    Flow_UI_Setting(0);   //
     osDelay(1);
   }
   /* USER CODE END Start_Debug */

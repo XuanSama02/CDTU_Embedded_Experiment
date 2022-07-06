@@ -5,6 +5,7 @@
 #include "stdio.h"
 
 /*
+https://github.com/XuanSama02
 STM32_HAL USART XuanLib V1.1
 2022/05/31
 changelog：重定义printf函数实现对UART1串口的输出
