@@ -145,7 +145,22 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    TM1638_LED(0x80);
+    osDelay(150);
+    TM1638_LED(0x40);
+    osDelay(150);
+    TM1638_LED(0x20);
+    osDelay(150);
+    TM1638_LED(0x10);
+    osDelay(150);
+    TM1638_LED(0x08);
+    osDelay(150);
+    TM1638_LED(0x04);
+    osDelay(150);
+    TM1638_LED(0x02);
+    osDelay(150);
+    TM1638_LED(0x01);
+    osDelay(150);
   }
   /* USER CODE END StartDefaultTask */
 }

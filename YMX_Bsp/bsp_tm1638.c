@@ -12,7 +12,7 @@ uint8_t SEG_OFF = 0x00;
  */
 void TM1638_Init(void)
 {
-    TM1638_Brightness(2);  //亮度：2档
+    TM1638_Brightness(6);  //亮度：6档
     TM1638_Command(COMMAND_DATA);  //采用地址自动+1
     TM1638_STB(GPIO_PIN_RESET);
     TM1638_Write(COMMAND_ADDR);  //设置起始地址
