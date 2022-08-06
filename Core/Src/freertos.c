@@ -50,7 +50,6 @@
 osThreadId defaultTaskHandle;
 osThreadId BlinkHandle;
 osThreadId TM1638Handle;
-osThreadId DebugHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -60,7 +59,6 @@ osThreadId DebugHandle;
 void StartDefaultTask(void const * argument);
 void Start_Blink(void const * argument);
 void Start_TM1638(void const * argument);
-void Start_Debug(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -112,16 +110,12 @@ void MX_FREERTOS_Init(void) {
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of Blink */
-  osThreadDef(Blink, Start_Blink, osPriorityNormal, 0, 128);
+  osThreadDef(Blink, Start_Blink, osPriorityHigh, 0, 128);
   BlinkHandle = osThreadCreate(osThread(Blink), NULL);
 
   /* definition and creation of TM1638 */
   osThreadDef(TM1638, Start_TM1638, osPriorityNormal, 0, 128);
   TM1638Handle = osThreadCreate(osThread(TM1638), NULL);
-
-  /* definition and creation of Debug */
-  osThreadDef(Debug, Start_Debug, osPriorityHigh, 0, 128);
-  DebugHandle = osThreadCreate(osThread(Debug), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -146,21 +140,21 @@ void StartDefaultTask(void const * argument)
   for(;;)
   {
     TM1638_LED(0x80);
-    osDelay(150);
+    osDelay(200);
     TM1638_LED(0x40);
-    osDelay(150);
+    osDelay(200);
     TM1638_LED(0x20);
-    osDelay(150);
+    osDelay(200);
     TM1638_LED(0x10);
-    osDelay(150);
+    osDelay(200);
     TM1638_LED(0x08);
-    osDelay(150);
+    osDelay(200);
     TM1638_LED(0x04);
-    osDelay(150);
+    osDelay(200);
     TM1638_LED(0x02);
-    osDelay(150);
+    osDelay(200);
     TM1638_LED(0x01);
-    osDelay(150);
+    osDelay(200);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -203,28 +197,9 @@ void Start_TM1638(void const * argument)
   for(;;)
   {
     Flow_UI_Display();
-    osDelay(100);
+    osDelay(200);
   }
   /* USER CODE END Start_TM1638 */
-}
-
-/* USER CODE BEGIN Header_Start_Debug */
-/**
-* @brief Function implementing the Debug thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_Start_Debug */
-void Start_Debug(void const * argument)
-{
-  /* USER CODE BEGIN Start_Debug */
-  osDelay(1000);
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END Start_Debug */
 }
 
 /* Private application code --------------------------------------------------*/

@@ -177,7 +177,7 @@ void TM1638_SEG_Single(uint8_t SEG_Position, uint8_t SEG_Show, bool SEG_Point)
  * @param SEG_Position 控制的数码管
  * @param SEG_ASCII 显示的小写英文字母的ASCII码
  */
-void TM1638_SEG_English(uint8_t SEG_Position ,int SEG_ASCII)
+void TM1638_SEG_English(uint8_t SEG_Position, int SEG_ASCII)
 {
     switch(SEG_ASCII)
     {
